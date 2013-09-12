@@ -1,22 +1,29 @@
 package com.tw.bootcamp.rental;
 
 public class Movie {
-    public static final int CHILDREN = 2;
-    public static final int REGULAR = 0;
-    public static final int NEW_RELEASE = 1;
     private String title;
-    private int priceCode;
+    private Type movieType;
 
-    public Movie(String title, int priceCode) {
+    public Movie(String title, Type priceCode) {
         this.title = title;
-        this.priceCode = priceCode;
+        this.movieType = priceCode;
     }
 
-    public int getPriceCode() {
-        return priceCode;
+    public Type getMovieType() {
+        return movieType;
     }
 
     public String getTitle() {
         return title;
+    }
+
+    public enum Type {
+        REGULAR(2, 1.5),
+        NEW_RELEASE(0,0),
+        CHILDREN(0,0);
+
+        Type(int baseDays, double amount) {
+            //To change body of created methods use File | Settings | File Templates.
+        }
     }
 }

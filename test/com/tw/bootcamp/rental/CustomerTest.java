@@ -12,11 +12,11 @@ public class CustomerTest {
     @Before
     public void setUp() throws Exception {
         customer = new Customer("Krishna Sure");
-        customer.addRental(new Rental(new Movie("102 Dalmatiens", Movie.CHILDREN), 4));
-        customer.addRental(new Rental(new Movie("She's Out Of My League", Movie.REGULAR), 3));
-        customer.addRental(new Rental(new Movie("Scooby-Doo and the Alien Invaders", Movie.CHILDREN), 2));
-        customer.addRental(new Rental(new Movie("Despicable Me 2", Movie.NEW_RELEASE), 5));
-        customer.addRental(new Rental(new Movie("Salt", Movie.REGULAR), 1));
+        customer.addRental(new Rental(new Movie("102 Dalmatiens", Movie.Type.CHILDREN), 4));
+        customer.addRental(new Rental(new Movie("She's Out Of My League", Movie.Type.REGULAR), 3));
+        customer.addRental(new Rental(new Movie("Scooby-Doo and the Alien Invaders", Movie.Type.CHILDREN), 2));
+        customer.addRental(new Rental(new Movie("Despicable Me 2", Movie.Type.NEW_RELEASE), 5));
+        customer.addRental(new Rental(new Movie("Salt", Movie.Type.REGULAR), 1));
     }
 
     @Test
