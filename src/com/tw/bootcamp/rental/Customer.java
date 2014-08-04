@@ -17,23 +17,27 @@ class Customer {
     }
 
     public String statement() {
-        String header = "Rental Record for " + name + "\n";
-        String tag = "\t%s\t%s\n";
-        String result = header;
-
         double totalAmount = totalAmount();
-
         int frequentRenterPoints = frequenterPoints();
 
-        for (Rental rental : rentals) {
-            result += String.format(tag, rental.movieName(), String.valueOf(rental.calculateAmount()));
-        }
+        String header = "Rental Record for " + name + "\n";
+        String tag = "\t%s\t%s\n";
+        String footer = String.format("Amount owed is %s\nYou earned %s frequent renter points",
+                String.valueOf(totalAmount), String.valueOf(frequentRenterPoints));
 
-        String footer1 = "Amount owed is " + String.valueOf(totalAmount) + "\n";
-        String footer2 = "You earned " + String.valueOf(frequentRenterPoints) + " frequent renter points";
-        result += footer1;
-        result += footer2;
-        return result;
+        return formatReceipt(header, tag, footer);
+    }
+
+    public String htmlStatement() {
+        double totalAmount = totalAmount();
+        int frequentRenterPoints = frequenterPoints();
+
+        String header = "<H1>Rentals for <EM>" + name + "</EM></H1><P>\n";
+        String tag = "%s: %s<BR>\n";
+        String footer = String.format("<P>You owed <EM>%s</EM><P>\nOn this rental you earned <EM>%s</EM> frequent renter points<P>",
+                String.valueOf(totalAmount), String.valueOf(frequentRenterPoints));
+
+        return formatReceipt(header, tag, footer);
     }
 
     private int frequenterPoints() {
@@ -52,23 +56,13 @@ class Customer {
         return totalAmount;
     }
 
-    public String htmlStatement() {
-        String header = "<H1>Rentals for <EM>" + name + "</EM></H1><P>\n";
-        String tag = "%s: %s<BR>\n";
+    private String formatReceipt(String header, String tag, String footer) {
         String result = header;
-
-        double totalAmount = totalAmount();
-
-        int frequentRenterPoints = frequenterPoints();
 
         for (Rental rental : rentals) {
             result += String.format(tag, rental.movieName(), String.valueOf(rental.calculateAmount()));
         }
-
-        String footer1 = "<P>You owed <EM>" + String.valueOf(totalAmount) + "</EM><P>\n";
-        String footer2 = "On this rental you earned <EM>" + String.valueOf(frequentRenterPoints) + "</EM> frequent renter points<P>";
-        result += footer1;
-        result += footer2;
+        result += footer;
         return result;
     }
 
