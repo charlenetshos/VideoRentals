@@ -20,24 +20,24 @@ class Customer {
         double totalAmount = totalAmount();
         int frequentRenterPoints = frequenterPoints();
 
-        String header = "Rental Record for " + name + "\n";
-        String tag = "\t%s\t%s\n";
-        String footer = String.format("Amount owed is %s\nYou earned %s frequent renter points",
-                String.valueOf(totalAmount), String.valueOf(frequentRenterPoints));
+        Statement textStatement = Statement.TEXT;
+        String header = textStatement.applyHeader(name);
+        String taggedRentals = textStatement.applyTag(rentals);
+        String footer = textStatement.applyFooter(totalAmount, frequentRenterPoints);
 
-        return formatReceipt(header, tag, footer);
+        return header + taggedRentals + footer;
     }
 
     public String htmlStatement() {
         double totalAmount = totalAmount();
         int frequentRenterPoints = frequenterPoints();
 
-        String header = "<H1>Rentals for <EM>" + name + "</EM></H1><P>\n";
-        String tag = "%s: %s<BR>\n";
-        String footer = String.format("<P>You owed <EM>%s</EM><P>\nOn this rental you earned <EM>%s</EM> frequent renter points<P>",
-                String.valueOf(totalAmount), String.valueOf(frequentRenterPoints));
+        Statement htmlStatement = Statement.HTML;
+        String header = htmlStatement.applyHeader(name);
+        String taggedRentals = htmlStatement.applyTag(rentals);
+        String footer = htmlStatement.applyFooter(totalAmount, frequentRenterPoints);
 
-        return formatReceipt(header, tag, footer);
+        return header + taggedRentals + footer;
     }
 
     private int frequenterPoints() {
@@ -54,16 +54,6 @@ class Customer {
             totalAmount += rental.calculateAmount();
         }
         return totalAmount;
-    }
-
-    private String formatReceipt(String header, String tag, String footer) {
-        String result = header;
-
-        for (Rental rental : rentals) {
-            result += String.format(tag, rental.movieName(), String.valueOf(rental.calculateAmount()));
-        }
-        result += footer;
-        return result;
     }
 
 }
